@@ -1,0 +1,102 @@
+﻿<Window x:Class="E_Metro.Ticket_month"
+    
+
+
+xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:E_Metro"
+            mc:Ignorable="d"
+        
+        xmlns:uc="clr-namespace:E_Metro.UserControlKteam"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+     TextElement.FontWeight="Regular"
+     TextElement.FontSize="13"
+     TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+     Background="{DynamicResource MaterialDesignPaper}"
+     FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        DataContext="{StaticResource TicketmonthVM}"
+     
+        WindowStartupLocation="CenterScreen"
+        Name="ticket_month"
+         Title="Ticket_month" Height="450" Width="800">
+
+    <StackPanel>
+        <Grid Grid.Row="0">
+            <uc:ControlBarUC Tag="{Binding Title, ElementName=ticket_month}"></uc:ControlBarUC>
+        </Grid>
+        <WrapPanel >
+            <StackPanel Width="400">
+                <GroupBox Header="Thông tin khách hàng" Height="153" >
+                    <WrapPanel >
+                        <StackPanel MaxWidth="200" MinWidth="150">
+                            <Label>Tên khách hàng</Label>
+                            <Label>CMND</Label>
+                            <Label>Số điện thoại</Label>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBox Height="25" Width="150" Text="{Binding SName}"></TextBox>
+                            <TextBox  Height="25"  Width="150" Text="{Binding SCm}"></TextBox>
+                            <TextBox  Height="25" Width="150" Text="{Binding Sphone}"></TextBox>
+
+                        </StackPanel>
+                    </WrapPanel>
+                </GroupBox>
+            </StackPanel>
+            <StackPanel Width="400">
+                <GroupBox Header="Thông tin đặt vé" Width="400" Height="153" >
+                    <WrapPanel>
+                        <StackPanel MaxWidth="200" MinWidth="150">
+                            <Label>Mã tuyến</Label>
+                            <Label>Ngày bắt đầu</Label>
+                            <Label>Ngày kết thúc</Label>
+                            
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBox   Height="25" Width="150" Text="{Binding RId}" ></TextBox>
+                            <TextBox   Height="25" Width="150" Text="{Binding MStart}"  ></TextBox>
+                            <TextBox   Height="25" Width="150" Text="{Binding MEnd}"  ></TextBox>
+                            
+                        </StackPanel>
+
+
+
+                    </WrapPanel>
+                </GroupBox>
+            </StackPanel>
+
+        </WrapPanel>
+
+        <WrapPanel Margin="0,20,0,0" Height="280">
+            <Grid Width="590" Height="332" HorizontalAlignment="Left" >
+                <DataGrid Grid.Column="0" ItemsSource="{Binding MonthList }" AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}" Margin="10,-15,0,10" Height="337" VerticalAlignment="Bottom" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Mã vé" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="Mã tuyến" Binding="{Binding RailwayID}"/>
+                        <DataGridTextColumn Header="Ga đi" Binding="{Binding RailWay.DepartureID}"/>
+                        <DataGridTextColumn Header="Ga đến"  Binding="{Binding RailWay.DestinationID}"/>
+                        <DataGridTextColumn Header="Ngày bắt đầu"  Binding="{Binding StartDate}"/>
+                        <DataGridTextColumn Header="Ngày kết thúc"  Binding="{Binding ExpireDate}"/>
+                        <DataGridTextColumn Header="Giá vé"  Binding="{Binding Price}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </Grid>
+            <Grid>
+                <Button Height="Auto" Content="Lưu"  Margin="70,-10,-155,237" Command="{Binding Savebtn}" />
+                <Button Height="Auto" Content="Sửa"  Margin="70,52,-155,175" Command="{Binding Updatebtn}" />
+                <Button Height="Auto" Content="Xóa"  Margin="70,115,-155,112" Command="{Binding Clearbtn}" />
+                <Button Height="Auto" Content="Station"  Margin="70,180,-155,47" Click="Button_Click" />
+            </Grid>
+
+
+
+        </WrapPanel>
+    </StackPanel>
+</Window>
+

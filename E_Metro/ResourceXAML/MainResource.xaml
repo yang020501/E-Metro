@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewmodel="clr-namespace:E_Metro.ViewModel"
+                    xmlns:local="clr-namespace:E_Metro.ResourceXAML">
+    <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
+    <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
+    <viewmodel:CompanyViewModel x:Key="CompanyVM"></viewmodel:CompanyViewModel>
+    <viewmodel:SearchViewModelCompany x:Key="SearchCompanyVM"></viewmodel:SearchViewModelCompany>
+    <viewmodel:TrafficViewModel x:Key="TrafficVM"></viewmodel:TrafficViewModel>
+    <viewmodel:SearchViewModelTraffic1 x:Key="SearchTraffic1VM"></viewmodel:SearchViewModelTraffic1>
+    <viewmodel:SearchViewModelTraffic2 x:Key="SearchTraffic2VM"></viewmodel:SearchViewModelTraffic2>
+    <viewmodel:Ticket_day x:Key="TicketdayVM"></viewmodel:Ticket_day>
+    <viewmodel:Ticket_month x:Key="TicketmonthVM"></viewmodel:Ticket_month>
+    <viewmodel:AddCompanyViewModel x:Key="AddCompanyVM"></viewmodel:AddCompanyViewModel>
+    <viewmodel:AddCompanyTrueViewModel x:Key="AddCompanyTrueVM"></viewmodel:AddCompanyTrueViewModel>
+    <viewmodel:AddStationViewModel x:Key="AddStationVM"></viewmodel:AddStationViewModel>
+    <viewmodel:SoldVM x:Key="SoldVM"></viewmodel:SoldVM>
+    <viewmodel:StationInfo x:Key="SInfoVM"></viewmodel:StationInfo>
+</ResourceDictionary>

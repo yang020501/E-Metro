@@ -1,0 +1,81 @@
+﻿<Window x:Class="E_Metro.InfoStation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:E_Metro"
+            mc:Ignorable="d"
+        
+        xmlns:uc="clr-namespace:E_Metro.UserControlKteam"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+     TextElement.FontWeight="Regular"
+     TextElement.FontSize="13"
+     TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+     Background="{DynamicResource MaterialDesignPaper}"
+     FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        DataContext="{StaticResource SInfoVM}"
+        Title="InfoStation" Height="450" Width="1200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <uc:ControlBarUC Tag="{Binding Title, ElementName=banVe}" ></uc:ControlBarUC>
+        </Grid>
+        <Grid Grid.Row="1">
+            <materialDesign:Card Grid.Column="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <TextBlock Text="Station Information" FontSize="40" TextAlignment="Center">
+
+                        </TextBlock>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <ListView ItemsSource="{Binding Stationlist}" FontSize="22" HorizontalContentAlignment="Center" HorizontalAlignment="Center">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn
+                                    DisplayMemberBinding="{Binding Id }"
+                                    Header="ID">
+
+                                    </GridViewColumn>
+
+                                    <GridViewColumn
+                                    DisplayMemberBinding="{Binding DisplayName}"
+                                    Header="Tên"
+                                      >
+                                    </GridViewColumn>
+
+                                    <GridViewColumn
+                                    DisplayMemberBinding="{Binding Address}"
+                                    Header="Địa chỉ">
+                                    </GridViewColumn>
+
+                                    <GridViewColumn
+                                    DisplayMemberBinding="{Binding Status}"
+                                    Header="Trạng thái">
+                                    </GridViewColumn>
+
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </Grid>
+            </materialDesign:Card>
+        </Grid>
+    </Grid>
+</Window>

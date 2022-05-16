@@ -1,0 +1,744 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EMetroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar(max)" />
+          <Property Name="Website" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="Phone" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="MonthlyTicket">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdType" Type="int" />
+          <Property Name="RailwayID" Type="int" />
+          <Property Name="ClientName" Type="nvarchar(max)" />
+          <Property Name="CLientIdentity" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="StartDate" Type="varchar" MaxLength="50" />
+          <Property Name="ExpireDate" Type="varchar" MaxLength="50" />
+          <Property Name="Price" Type="money" />
+        </EntityType>
+        <EntityType Name="RailWay">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar(max)" />
+          <Property Name="DepartureID" Type="int" />
+          <Property Name="DestinationID" Type="int" />
+          <Property Name="Price" Type="money" />
+          <Property Name="OwnedCompanyId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StandarTicket">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RailwayID" Type="int" />
+          <Property Name="DepartDate" Type="smalldatetime" />
+          <Property Name="DepartHour" Type="time" Precision="7" />
+          <Property Name="IdType" Type="int" />
+        </EntityType>
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TicketSold">
+          <Key>
+            <PropertyRef Name="SoldID" />
+          </Key>
+          <Property Name="SoldID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" />
+          <Property Name="RailwayID" Type="int" />
+          <Property Name="IdType" Type="int" />
+        </EntityType>
+        <EntityType Name="TicketType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar(max)" />
+          <Property Name="Username" Type="nvarchar" MaxLength="100" />
+          <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="IdRole" Type="int" Nullable="false" />
+          <Property Name="CompanyID" Type="int" />
+        </EntityType>
+        <Association Name="FK__MonthlyTi__IdTyp__33D4B598">
+          <End Role="TicketType" Type="Self.TicketType" Multiplicity="0..1" />
+          <End Role="MonthlyTicket" Type="Self.MonthlyTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonthlyTicket">
+              <PropertyRef Name="IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MonthlyTi__Railw__34C8D9D1">
+          <End Role="RailWay" Type="Self.RailWay" Multiplicity="0..1" />
+          <End Role="MonthlyTicket" Type="Self.MonthlyTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RailWay">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonthlyTicket">
+              <PropertyRef Name="RailwayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RailWay__Departu__35BCFE0A">
+          <End Role="Station" Type="Self.Station" Multiplicity="0..1" />
+          <End Role="RailWay" Type="Self.RailWay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RailWay">
+              <PropertyRef Name="DepartureID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RailWay__Destina__36B12243">
+          <End Role="Station" Type="Self.Station" Multiplicity="0..1" />
+          <End Role="RailWay" Type="Self.RailWay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RailWay">
+              <PropertyRef Name="DestinationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RailWay__OwnedCo__37A5467C">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="RailWay" Type="Self.RailWay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RailWay">
+              <PropertyRef Name="OwnedCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StandarTi__IdTyp__38996AB5">
+          <End Role="TicketType" Type="Self.TicketType" Multiplicity="0..1" />
+          <End Role="StandarTicket" Type="Self.StandarTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StandarTicket">
+              <PropertyRef Name="IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StandarTi__Railw__398D8EEE">
+          <End Role="RailWay" Type="Self.RailWay" Multiplicity="0..1" />
+          <End Role="StandarTicket" Type="Self.StandarTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RailWay">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StandarTicket">
+              <PropertyRef Name="RailwayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketSol__IdTyp__3A81B327">
+          <End Role="TicketType" Type="Self.TicketType" Multiplicity="0..1" />
+          <End Role="TicketSold" Type="Self.TicketSold" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketSold">
+              <PropertyRef Name="IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketSol__Railw__3B75D760">
+          <End Role="RailWay" Type="Self.RailWay" Multiplicity="0..1" />
+          <End Role="TicketSold" Type="Self.TicketSold" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RailWay">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketSold">
+              <PropertyRef Name="RailwayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketSold__Id__3C69FB99">
+          <End Role="StandarTicket" Type="Self.StandarTicket" Multiplicity="0..1" />
+          <End Role="TicketSold" Type="Self.TicketSold" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StandarTicket">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketSold">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__CompanyID__3D5E1FD2">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__IdRole__3E52440B">
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EMetroModelStoreContainer">
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MonthlyTicket" EntityType="Self.MonthlyTicket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RailWay" EntityType="Self.RailWay" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StandarTicket" EntityType="Self.StandarTicket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Station" EntityType="Self.Station" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TicketSold" EntityType="Self.TicketSold" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TicketType" EntityType="Self.TicketType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__MonthlyTi__IdTyp__33D4B598" Association="Self.FK__MonthlyTi__IdTyp__33D4B598">
+            <End Role="TicketType" EntitySet="TicketType" />
+            <End Role="MonthlyTicket" EntitySet="MonthlyTicket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MonthlyTi__Railw__34C8D9D1" Association="Self.FK__MonthlyTi__Railw__34C8D9D1">
+            <End Role="RailWay" EntitySet="RailWay" />
+            <End Role="MonthlyTicket" EntitySet="MonthlyTicket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RailWay__Departu__35BCFE0A" Association="Self.FK__RailWay__Departu__35BCFE0A">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="RailWay" EntitySet="RailWay" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RailWay__Destina__36B12243" Association="Self.FK__RailWay__Destina__36B12243">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="RailWay" EntitySet="RailWay" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RailWay__OwnedCo__37A5467C" Association="Self.FK__RailWay__OwnedCo__37A5467C">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="RailWay" EntitySet="RailWay" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StandarTi__IdTyp__38996AB5" Association="Self.FK__StandarTi__IdTyp__38996AB5">
+            <End Role="TicketType" EntitySet="TicketType" />
+            <End Role="StandarTicket" EntitySet="StandarTicket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StandarTi__Railw__398D8EEE" Association="Self.FK__StandarTi__Railw__398D8EEE">
+            <End Role="RailWay" EntitySet="RailWay" />
+            <End Role="StandarTicket" EntitySet="StandarTicket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketSol__IdTyp__3A81B327" Association="Self.FK__TicketSol__IdTyp__3A81B327">
+            <End Role="TicketType" EntitySet="TicketType" />
+            <End Role="TicketSold" EntitySet="TicketSold" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketSol__Railw__3B75D760" Association="Self.FK__TicketSol__Railw__3B75D760">
+            <End Role="RailWay" EntitySet="RailWay" />
+            <End Role="TicketSold" EntitySet="TicketSold" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketSold__Id__3C69FB99" Association="Self.FK__TicketSold__Id__3C69FB99">
+            <End Role="StandarTicket" EntitySet="StandarTicket" />
+            <End Role="TicketSold" EntitySet="TicketSold" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__CompanyID__3D5E1FD2" Association="Self.FK__Users__CompanyID__3D5E1FD2">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__IdRole__3E52440B" Association="Self.FK__Users__IdRole__3E52440B">
+            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EMetroModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Website" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="RailWays" Relationship="Self.FK__RailWay__OwnedCo__37A5467C" FromRole="Company" ToRole="RailWay" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__CompanyID__3D5E1FD2" FromRole="Company" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="MonthlyTicket">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdType" Type="Int32" />
+          <Property Name="RailwayID" Type="Int32" />
+          <Property Name="ClientName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CLientIdentity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExpireDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="TicketType" Relationship="Self.FK__MonthlyTi__IdTyp__33D4B598" FromRole="MonthlyTicket" ToRole="TicketType" />
+          <NavigationProperty Name="RailWay" Relationship="Self.FK__MonthlyTi__Railw__34C8D9D1" FromRole="MonthlyTicket" ToRole="RailWay" />
+        </EntityType>
+        <EntityType Name="RailWay">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DepartureID" Type="Int32" />
+          <Property Name="DestinationID" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="OwnedCompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__RailWay__OwnedCo__37A5467C" FromRole="RailWay" ToRole="Company" />
+          <NavigationProperty Name="MonthlyTickets" Relationship="Self.FK__MonthlyTi__Railw__34C8D9D1" FromRole="RailWay" ToRole="MonthlyTicket" />
+          <NavigationProperty Name="Station" Relationship="Self.FK__RailWay__Departu__35BCFE0A" FromRole="RailWay" ToRole="Station" />
+          <NavigationProperty Name="Station1" Relationship="Self.FK__RailWay__Destina__36B12243" FromRole="RailWay" ToRole="Station" />
+          <NavigationProperty Name="StandarTickets" Relationship="Self.FK__StandarTi__Railw__398D8EEE" FromRole="RailWay" ToRole="StandarTicket" />
+          <NavigationProperty Name="TicketSolds" Relationship="Self.FK__TicketSol__Railw__3B75D760" FromRole="RailWay" ToRole="TicketSold" />
+        </EntityType>
+        <EntityType Name="StandarTicket">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RailwayID" Type="Int32" />
+          <Property Name="DepartDate" Type="DateTime" Precision="0" />
+          <Property Name="DepartHour" Type="Time" Precision="7" />
+          <Property Name="IdType" Type="Int32" />
+          <NavigationProperty Name="RailWay" Relationship="Self.FK__StandarTi__Railw__398D8EEE" FromRole="StandarTicket" ToRole="RailWay" />
+          <NavigationProperty Name="TicketType" Relationship="Self.FK__StandarTi__IdTyp__38996AB5" FromRole="StandarTicket" ToRole="TicketType" />
+          <NavigationProperty Name="TicketSolds" Relationship="Self.FK__TicketSold__Id__3C69FB99" FromRole="StandarTicket" ToRole="TicketSold" />
+        </EntityType>
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RailWays" Relationship="Self.FK__RailWay__Departu__35BCFE0A" FromRole="Station" ToRole="RailWay" />
+          <NavigationProperty Name="RailWays1" Relationship="Self.FK__RailWay__Destina__36B12243" FromRole="Station" ToRole="RailWay" />
+        </EntityType>
+        <EntityType Name="TicketSold">
+          <Key>
+            <PropertyRef Name="SoldID" />
+          </Key>
+          <Property Name="SoldID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" />
+          <Property Name="RailwayID" Type="Int32" />
+          <Property Name="IdType" Type="Int32" />
+          <NavigationProperty Name="RailWay" Relationship="Self.FK__TicketSol__Railw__3B75D760" FromRole="TicketSold" ToRole="RailWay" />
+          <NavigationProperty Name="StandarTicket" Relationship="Self.FK__TicketSold__Id__3C69FB99" FromRole="TicketSold" ToRole="StandarTicket" />
+          <NavigationProperty Name="TicketType" Relationship="Self.FK__TicketSol__IdTyp__3A81B327" FromRole="TicketSold" ToRole="TicketType" />
+        </EntityType>
+        <EntityType Name="TicketType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MonthlyTickets" Relationship="Self.FK__MonthlyTi__IdTyp__33D4B598" FromRole="TicketType" ToRole="MonthlyTicket" />
+          <NavigationProperty Name="StandarTickets" Relationship="Self.FK__StandarTi__IdTyp__38996AB5" FromRole="TicketType" ToRole="StandarTicket" />
+          <NavigationProperty Name="TicketSolds" Relationship="Self.FK__TicketSol__IdTyp__3A81B327" FromRole="TicketType" ToRole="TicketSold" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__IdRole__3E52440B" FromRole="UserRole" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <Property Name="CompanyID" Type="Int32" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__Users__CompanyID__3D5E1FD2" FromRole="Users" ToRole="Company" />
+          <NavigationProperty Name="UserRole" Relationship="Self.FK__Users__IdRole__3E52440B" FromRole="Users" ToRole="UserRole" />
+        </EntityType>
+        <Association Name="FK__RailWay__OwnedCo__37A5467C">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="RailWay" Type="Self.RailWay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RailWay">
+              <PropertyRef Name="OwnedCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__CompanyID__3D5E1FD2">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MonthlyTi__IdTyp__33D4B598">
+          <End Role="TicketType" Type="Self.TicketType" Multiplicity="0..1" />
+          <End Role="MonthlyTicket" Type="Self.MonthlyTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonthlyTicket">
+              <PropertyRef Name="IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MonthlyTi__Railw__34C8D9D1">
+          <End Role="RailWay" Type="Self.RailWay" Multiplicity="0..1" />
+          <End Role="MonthlyTicket" Type="Self.MonthlyTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RailWay">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonthlyTicket">
+              <PropertyRef Name="RailwayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RailWay__Departu__35BCFE0A">
+          <End Role="Station" Type="Self.Station" Multiplicity="0..1" />
+          <End Role="RailWay" Type="Self.RailWay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RailWay">
+              <PropertyRef Name="DepartureID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RailWay__Destina__36B12243">
+          <End Role="Station" Type="Self.Station" Multiplicity="0..1" />
+          <End Role="RailWay" Type="Self.RailWay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RailWay">
+              <PropertyRef Name="DestinationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StandarTi__Railw__398D8EEE">
+          <End Role="RailWay" Type="Self.RailWay" Multiplicity="0..1" />
+          <End Role="StandarTicket" Type="Self.StandarTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RailWay">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StandarTicket">
+              <PropertyRef Name="RailwayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketSol__Railw__3B75D760">
+          <End Role="RailWay" Type="Self.RailWay" Multiplicity="0..1" />
+          <End Role="TicketSold" Type="Self.TicketSold" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RailWay">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketSold">
+              <PropertyRef Name="RailwayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StandarTi__IdTyp__38996AB5">
+          <End Role="TicketType" Type="Self.TicketType" Multiplicity="0..1" />
+          <End Role="StandarTicket" Type="Self.StandarTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StandarTicket">
+              <PropertyRef Name="IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketSold__Id__3C69FB99">
+          <End Role="StandarTicket" Type="Self.StandarTicket" Multiplicity="0..1" />
+          <End Role="TicketSold" Type="Self.TicketSold" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StandarTicket">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketSold">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketSol__IdTyp__3A81B327">
+          <End Role="TicketType" Type="Self.TicketType" Multiplicity="0..1" />
+          <End Role="TicketSold" Type="Self.TicketSold" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketSold">
+              <PropertyRef Name="IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__IdRole__3E52440B">
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EMetroEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Companies" EntityType="Self.Company" />
+          <EntitySet Name="MonthlyTickets" EntityType="Self.MonthlyTicket" />
+          <EntitySet Name="RailWays" EntityType="Self.RailWay" />
+          <EntitySet Name="StandarTickets" EntityType="Self.StandarTicket" />
+          <EntitySet Name="Stations" EntityType="Self.Station" />
+          <EntitySet Name="TicketSolds" EntityType="Self.TicketSold" />
+          <EntitySet Name="TicketTypes" EntityType="Self.TicketType" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__RailWay__OwnedCo__37A5467C" Association="Self.FK__RailWay__OwnedCo__37A5467C">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="RailWay" EntitySet="RailWays" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__CompanyID__3D5E1FD2" Association="Self.FK__Users__CompanyID__3D5E1FD2">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MonthlyTi__IdTyp__33D4B598" Association="Self.FK__MonthlyTi__IdTyp__33D4B598">
+            <End Role="TicketType" EntitySet="TicketTypes" />
+            <End Role="MonthlyTicket" EntitySet="MonthlyTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MonthlyTi__Railw__34C8D9D1" Association="Self.FK__MonthlyTi__Railw__34C8D9D1">
+            <End Role="RailWay" EntitySet="RailWays" />
+            <End Role="MonthlyTicket" EntitySet="MonthlyTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RailWay__Departu__35BCFE0A" Association="Self.FK__RailWay__Departu__35BCFE0A">
+            <End Role="Station" EntitySet="Stations" />
+            <End Role="RailWay" EntitySet="RailWays" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RailWay__Destina__36B12243" Association="Self.FK__RailWay__Destina__36B12243">
+            <End Role="Station" EntitySet="Stations" />
+            <End Role="RailWay" EntitySet="RailWays" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StandarTi__Railw__398D8EEE" Association="Self.FK__StandarTi__Railw__398D8EEE">
+            <End Role="RailWay" EntitySet="RailWays" />
+            <End Role="StandarTicket" EntitySet="StandarTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketSol__Railw__3B75D760" Association="Self.FK__TicketSol__Railw__3B75D760">
+            <End Role="RailWay" EntitySet="RailWays" />
+            <End Role="TicketSold" EntitySet="TicketSolds" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StandarTi__IdTyp__38996AB5" Association="Self.FK__StandarTi__IdTyp__38996AB5">
+            <End Role="TicketType" EntitySet="TicketTypes" />
+            <End Role="StandarTicket" EntitySet="StandarTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketSold__Id__3C69FB99" Association="Self.FK__TicketSold__Id__3C69FB99">
+            <End Role="StandarTicket" EntitySet="StandarTickets" />
+            <End Role="TicketSold" EntitySet="TicketSolds" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketSol__IdTyp__3A81B327" Association="Self.FK__TicketSol__IdTyp__3A81B327">
+            <End Role="TicketType" EntitySet="TicketTypes" />
+            <End Role="TicketSold" EntitySet="TicketSolds" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__IdRole__3E52440B" Association="Self.FK__Users__IdRole__3E52440B">
+            <End Role="UserRole" EntitySet="UserRoles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EMetroModelStoreContainer" CdmEntityContainer="EMetroEntities2">
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="EMetroModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MonthlyTickets">
+            <EntityTypeMapping TypeName="EMetroModel.MonthlyTicket">
+              <MappingFragment StoreEntitySet="MonthlyTicket">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+                <ScalarProperty Name="RailwayID" ColumnName="RailwayID" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="CLientIdentity" ColumnName="CLientIdentity" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RailWays">
+            <EntityTypeMapping TypeName="EMetroModel.RailWay">
+              <MappingFragment StoreEntitySet="RailWay">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="DepartureID" ColumnName="DepartureID" />
+                <ScalarProperty Name="DestinationID" ColumnName="DestinationID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="OwnedCompanyId" ColumnName="OwnedCompanyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StandarTickets">
+            <EntityTypeMapping TypeName="EMetroModel.StandarTicket">
+              <MappingFragment StoreEntitySet="StandarTicket">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RailwayID" ColumnName="RailwayID" />
+                <ScalarProperty Name="DepartDate" ColumnName="DepartDate" />
+                <ScalarProperty Name="DepartHour" ColumnName="DepartHour" />
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stations">
+            <EntityTypeMapping TypeName="EMetroModel.Station">
+              <MappingFragment StoreEntitySet="Station">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketSolds">
+            <EntityTypeMapping TypeName="EMetroModel.TicketSold">
+              <MappingFragment StoreEntitySet="TicketSold">
+                <ScalarProperty Name="SoldID" ColumnName="SoldID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RailwayID" ColumnName="RailwayID" />
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketTypes">
+            <EntityTypeMapping TypeName="EMetroModel.TicketType">
+              <MappingFragment StoreEntitySet="TicketType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="EMetroModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="EMetroModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

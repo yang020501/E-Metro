@@ -1,0 +1,140 @@
+﻿<Window x:Class="E_Metro.Sold"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:E_Metro"
+            mc:Ignorable="d"
+        
+        xmlns:uc="clr-namespace:E_Metro.UserControlKteam"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+     TextElement.FontWeight="Regular"
+     TextElement.FontSize="13"
+     TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+     Background="{DynamicResource MaterialDesignPaper}"
+     FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        DataContext="{StaticResource SoldVM}"
+        WindowStartupLocation="CenterScreen"
+        Title="Sold" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <uc:ControlBarUC Tag="{Binding Title, ElementName=banVe}" ></uc:ControlBarUC>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <materialDesign:Card Grid.Column="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <TextBlock Text="Standard Ticket" FontSize="40" TextAlignment="Center">
+
+                        </TextBlock>
+                    </Grid>
+
+
+                    <Grid Grid.Row="1">
+                        <ListView ItemsSource="{Binding DayList}" >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn
+                                    DisplayMemberBinding="{Binding SoldID }"
+                                    Header="Stt">
+
+                                    </GridViewColumn>
+
+                                    <GridViewColumn
+                                    DisplayMemberBinding="{Binding Id}"
+                                    Header="Mã vé"
+                                      >
+                                    </GridViewColumn>
+
+                                    <GridViewColumn
+                                    DisplayMemberBinding="{Binding RailwayID}"
+                                    Header="Mã tuyến">
+                                    </GridViewColumn>
+
+                                    <GridViewColumn
+                                    DisplayMemberBinding="{Binding RailWay.Price}"
+                                    Header="Giá">
+                                    </GridViewColumn>
+
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </Grid>
+
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <TextBlock Text="Month Ticket" FontSize="40" TextAlignment="Center">
+
+                        </TextBlock>
+                    </Grid>
+
+
+                    <Grid Grid.Row="1">
+                        <ListView ItemsSource="{Binding MonthList}">
+                            <ListView.View>
+                                <GridView>
+
+                                    <GridViewColumn
+                                    DisplayMemberBinding="{Binding ClientName}"
+                                    Header="Tên khách hàng"
+                                      >
+                                    </GridViewColumn>
+                                    <GridViewColumn
+                                    DisplayMemberBinding="{Binding CLientIdentity}"
+                                    Header="CMND"
+                                      >
+                                    </GridViewColumn>
+                                    <GridViewColumn
+                                    DisplayMemberBinding="{Binding Id}"
+                                    Header="Mã vé"
+                                      >
+                                    </GridViewColumn>
+
+                                    <GridViewColumn
+                                    DisplayMemberBinding="{Binding RailwayID}"
+                                    Header="Mã tuyến">
+                                    </GridViewColumn>
+
+                                    <GridViewColumn
+                                    DisplayMemberBinding="{Binding Price}"
+                                    Header="Giá">
+                                    </GridViewColumn>
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </Grid>
+
+            </materialDesign:Card>
+        </Grid>
+    </Grid>
+</Window>
